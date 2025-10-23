@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TEKA-TEKI</title>
+  <style>
+    /* Background panorama pantai - full page */
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
+                  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat fixed;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Card tengah */
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+      box-sizing:border-box;
+    }
+
+    .card{
+      width:100%;
+      max-width:720px;
+      background: rgba(255,255,255,0.95);
+      border-radius:12px;
+      padding:28px;
+      box-shadow: 0 12px 30px rgba(5,10,20,0.35);
+      backdrop-filter: blur(4px);
+    }
+
+    h1{
+      margin:0 0 12px 0;
+      text-align:center;
+      font-size:30px;
+      letter-spacing:2px;
+    }
+
+    .puzzle{
+      background: #fffbe6;
+      border: 1px solid #ffecb5;
+      padding:16px;
+      border-radius:8px;
+      margin-bottom:18px;
+      color:#0b1220;
+    }
+
+    label{
+      display:block;
+      margin:8px 0 6px;
+      font-weight:600;
+    }
+
+    input[type="text"]{
+      width:100%;
+      padding:12px;
+      font-size:16px;
+      border-radius:8px;
+      border:1px solid #d0d7e0;
+      box-sizing:border-box;
+    }
+
+    .actions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+    }
+
+    button{
+      padding:10px 14px;
+      border-radius:8px;
+      border:0;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .btn-primary{ background:#0ea5a4; color:white; }
+    .btn-secondary{ background:#e6e9ef; color:#101828; }
+
+    .feedback{
+      margin-top:14px;
+      padding:12px;
+      border-radius:8px;
+      display:none;
+    }
+
+    .feedback.success{
+      background:#ecfdf5;
+      color:#065f46;
+      border:1px solid #bbf7d0;
+    }
+
+    .feedback.error{
+      background:#fff1f2;
+      color:#7f1d1d;
+      border:1px solid #fecaca;
+    }
+
+    /* responsive */
+    @media (max-width:480px){
+      .card{padding:18px}
+      h1{font-size:22px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-labelledby="judul">
+      <h1 id="judul">TEKA-TEKI</h1>
+
+      <section class="puzzle" aria-live="polite">
+        <p><strong>Siapakah aku?</strong></p>
+        <p>“siapakah aku ? Aku Adalah seekor hewan. Kakiku empat. Ekorku Panjang Di belakang. Berbulu, dan memiliki belalai. Jawab yang benar”</p>
+      </section>
+
+      <form id="quizForm" onsubmit="return false;" autocomplete="off" novalidate>
+        <label for="answer">Jawaban:</label>
+        <input id="answer" name="answer" type="text" placeholder="Tulis jawabanmu di sini..." aria-label="Jawaban teka-teki" />
+
+        <div class="actions">
+          <button id="checkBtn" class="btn-primary" type="button">Periksa</button>
+          <button id="resetBtn" class="btn-secondary" type="button">Reset</button>
+        </div>
+
+        <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    (function(){
+      const answerInput = document.getElementById('answer');
+      const checkBtn = document.getElementById('checkBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const feedback = document.getElementById('feedback');
+
+      function normalize(s){
+        return (s || '').trim().toLowerCase();
+      }
+
+      function showFeedback(text, ok){
+        feedback.textContent = text;
+        feedback.className = 'feedback ' + (ok ? 'success' : 'error');
+        feedback.style.display = 'block';
+      }
+
+      checkBtn.addEventListener('click', function(){
+        const val = normalize(answerInput.value);
+        if (val === 'gajah') {
+          showFeedback('Hebat, Jawaban Anda Benar', true);
+        } else {
+          showFeedback('Jawaban Anda Salah silahkan ulangi lagi', false);
+        }
+      });
+
+      // Enter key juga memeriksa
+      answerInput.addEventListener('keydown', function(e){
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          checkBtn.click();
+        }
+      });
+
+      resetBtn.addEventListener('click', function(){
+        answerInput.value = '';
+        feedback.style.display = 'none';
+        answerInput.focus();
+      });
+
+      // fokus saat halaman dibuka
+      window.addEventListener('load', () => answerInput.focus());
+    })();
+  </script>
+</body>
+</html>
