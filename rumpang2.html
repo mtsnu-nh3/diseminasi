@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teks Rompang - Listening Activity</title>
+<style>
+  body {
+    background-color: #003366; /* biru tua */
+    color: #000;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+  }
+  h1 {
+    color: white;
+    background-color: #66ccff; /* biru muda */
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .container {
+    background-color: #66ccff; /* skin biru muda */
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    margin: auto;
+  }
+  audio {
+    margin: 20px 0;
+  }
+  input[type="text"] {
+    width: 100px;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #999;
+    background-color: white; /* teks area putih */
+    text-align: center;
+  }
+  button {
+    background-color: #004080;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  button:hover {
+    background-color: #0066cc;
+  }
+  #feedback {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<h1>Fill in the Blanks - Listening Activity</h1>
+
+<div class="container">
+  <p><strong>Instruction:</strong> Listen to the audio carefully, then fill in the blanks with the correct words.</p>
+
+  <audio controls>
+    <source src="https://mtsnu-nh3.github.io/diseminasi/suaraperkenalan.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <p>
+    My name is Junaidi, and I was 
+    <input type="text" id="q1" placeholder="[1]"> in Kudus in 
+    <input type="text" id="q2" placeholder="[2]">. 
+    I live in a small 
+    <input type="text" id="q3" placeholder="[3]"> called Kaliwungu, Kudus Regency. 
+    I'm 
+    <input type="text" id="q4" placeholder="[4]"> and have 
+    <input type="text" id="q5" placeholder="[5]"> children. 
+    I work as a 
+    <input type="text" id="q6" placeholder="[6]"> at MTs NU Nurul Huda. 
+    My 
+    <input type="text" id="q7" placeholder="[7]"> is website development.
+  </p>
+
+  <button onclick="checkAnswers()">HASIL</button>
+  <button onclick="resetAnswers()">RESET</button>
+
+  <div id="feedback"></div>
+</div>
+
+<script>
+function checkAnswers() {
+  const answers = {
+    q1: "born",
+    q2: "1984",
+    q3: "village",
+    q4: "married",
+    q5: "three",
+    q6: "teacher",
+    q7: "passion"
+  };
+
+  let correct = true;
+  for (let key in answers) {
+    let userAnswer = document.getElementById(key).value.trim().toLowerCase();
+    if (userAnswer !== answers[key].toLowerCase()) {
+      correct = false;
+      break;
+    }
+  }
+
+  const feedback = document.getElementById("feedback");
+  if (correct) {
+    feedback.style.color = "green";
+    feedback.innerText = "Hebat. Jawaban anda benar!";
+  } else {
+    feedback.style.color = "red";
+    feedback.innerText = "Maaf. Jawaban anda salah, ulangi lagi!";
+  }
+}
+
+function resetAnswers() {
+  document.querySelectorAll("input[type='text']").forEach(el => el.value = "");
+  document.getElementById("feedback").innerText = "";
+}
+</script>
+
+</body>
+</html>
